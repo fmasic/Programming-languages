@@ -7,7 +7,7 @@
 - [Usage](#usage)
 
 ## Introduction
-This project uses C#, JavaScript, and Python, and implements a sudoku game in each language. There is 9x9 grid, user input, error checker and solver in each version. Every implementation utilizes similar logic and presentes similar output.
+This project uses C#, JavaScript, and Python, and implements a sudoku game in each language. There is 9x9 grid, consisting of 3x3 subgrids that consist of digits 1 to 9 entered by the user,  an error checker and solver in each version. Every implementation utilizes similar logic and presentes similar output.
 
 ## Features
 - **Puzzle Generation**: Every run provides a brand-new Sudoku problem that can be solved.
