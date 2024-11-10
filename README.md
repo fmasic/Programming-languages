@@ -13,6 +13,9 @@ This project uses C#, JavaScript, and Python, and implements a sudoku game in ea
 - **Puzzle Generation**: Every run provides a brand-new Sudoku problem that can be solved.
 - **Real-Time Validation**: Player input is validated in real time to make sure it complies with Sudoku rules.
 - **Automatic Solver**: Solves any Sudoku puzzle by using created algorithm.
+- **Three chances**: User is allowed to make no more than three mistakes.
+- **Clear board**: Deletes every input given by the user, allowing a fresh start.
+- **Timer**: Tracks the time taken to solve a puzzle.
 - **Hints**: Offers users hints in case they run into difficulties.
 - **Multi-Language**: Implemented in C#, Python, and JavaScript.
 
@@ -35,6 +38,10 @@ This project uses C#, JavaScript, and Python, and implements a sudoku game in ea
      - The solver option can be used if the user wants to view the answer.
      - The finished puzzle will be located and shown by using created algorithm.
 
-5. **Exiting the Game**:
+5. **Making Mistakes**
+     - Each time a player makes a mistake, they have one less chance.
+     - Upon making three mistakes, the game will end, resulting in the player losing.
+
+6. **Exiting the Game**:
      - Dismiss the program window or follow the on-screen instructions to end the game.
 
