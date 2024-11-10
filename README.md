@@ -10,6 +10,7 @@
 This project uses C#, JavaScript, and Python, and implements a sudoku game in each language. There is 9x9 grid, consisting of 3x3 subgrids that take digits 1 to 9 entered by the user,  an error checker and solver in each version. Every implementation utilizes similar logic and presentes similar output.
 
 ## Features
+- **How To Play?**: New players can read brief instructions on how to play Sudoku, explaining the rules.
 - **Puzzle Generation**: Every run provides a brand-new Sudoku problem that can be solved.
 - **Real-Time Validation**: Player input is validated in real time to make sure it complies with Sudoku rules.
 - **Automatic Solver**: Solves any Sudoku puzzle by using created algorithm.
