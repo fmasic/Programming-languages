@@ -21,6 +21,7 @@ This project uses C#, JavaScript, and Python, and implements a sudoku game in ea
 - **Multi-Language**: Implemented in C#, Python, and JavaScript.
 
 ## Installation
+Will be updated!
 
 ## Usage
 1. **Starting the Game**:
