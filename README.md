@@ -16,8 +16,6 @@ This project uses C#, JavaScript, and Python, and implements a sudoku game in ea
 - **Automatic Solver**: Solves any Sudoku puzzle by using created algorithm.
 - **Three chances**: User is allowed to make no more than three mistakes.
 - **Clear board**: Deletes every input given by the user, allowing a fresh start.
-- **Timer**: Tracks the time taken to solve a puzzle.
-- **Hints**: Offers users hints in case they run into difficulties.
 - **Multi-Language**: Implemented in C#, Python, and JavaScript.
 
 ## Installation
@@ -32,18 +30,14 @@ Will be updated!
     - A 9x9 grid format will be used to display the problem. The user has the option to enter their guesses for the numbers in the blank cells. 
     - The program will verify user input by looking for contradictions with the Sudoku rules, which prohibit repeating numbers in 3x3 subgrids, rows, or columns.
 
-3. **Getting Hints**:
-     - The user can ask for a hint if they run into difficulties.
-     - Using valid Sudoku rules, the program will offer a number for one of the empty cells.
-
-4. **Solving the Puzzle**:
+3. **Solving the Puzzle**:
      - The solver option can be used if the user wants to view the answer.
      - The finished puzzle will be located and shown by using created algorithm.
 
-5. **Making Mistakes**
+4. **Making Mistakes**
      - Each time a player makes a mistake, they have one less chance.
      - Upon making three mistakes, the game will end, resulting in the player losing.
 
-6. **Exiting the Game**:
+5. **Exiting the Game**:
      - Dismiss the program window or follow the on-screen instructions to end the game.
 
