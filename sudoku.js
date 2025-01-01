@@ -126,7 +126,7 @@ function selectNum() {
 function highlightCells(number){
     const tiles=document.querySelectorAll(".tile");
     tiles.forEach((tile)=> {
-        if(tile.innerText.trim()=== number){
+        if(tile.innerText.trim()=== number){ //trim function deletes any whitespace that might cause a mismatch in the string comparison
             tile.classList.add("tile-highlight");
         }
     });
