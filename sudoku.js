@@ -279,7 +279,7 @@ function clearBoard() {
 function createClearButton() {
     const clearButton = document.createElement("button");
     clearButton.id = "clear-board";
-    clearButton.innerText = "CLEAR BOARD";
+    clearButton.innerText = "RESTART";
     clearButton.addEventListener("click", clearBoard);
     document.getElementById("controls").appendChild(clearButton);
 }
