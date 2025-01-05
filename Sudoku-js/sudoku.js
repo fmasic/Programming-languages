@@ -59,7 +59,7 @@ function fillBoard(grid) {
 }
 
 function removeNumbers(grid) {
-    let attempts = 30; //more attempts makes the game harder
+    let attempts = 40; //more attempts makes the game harder
     while (attempts > 0) { 
         const row = Math.floor(Math.random() * 9); //random row
         const col = Math.floor(Math.random() * 9); //random column
