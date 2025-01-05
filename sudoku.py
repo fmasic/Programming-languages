@@ -30,24 +30,48 @@ class SudokuGrid:
         # Controls (number selection buttons and action buttons)
         self.create_controls()
 
-    def create_grid(self): #creating the 9x9 Sudoku grid using tk.Entry widgets (which are editable text fields) and arranging them into a grid layout
-        self.grid_frame = tk.Frame(self.root) #container for the 9x9 grid of Entry widgets
+    def create_grid(self):
+        self.grid_frame = tk.Frame(self.root)  # container for the 9x9 grid of Entry widgets
         self.grid_frame.pack(pady=10)
+
+    # Define a validation function
+        def validate_input(P):
+            return P.isdigit() and 1 <= int(P) <= 9 or P == ""
+
+    # Register the validation function
+        vcmd = (self.root.register(validate_input), "%P")
 
         for i in range(9):
             for j in range(9):
-                bg_color = "#80C1FF" if (i // 3 + j // 3) % 2 == 0 else "#BAD7F2" #dividing them in subgrids
-                entry = tk.Entry(self.grid_frame, width=2, font=("Courier", 18, "bold"), justify="center", bg=bg_color)
-                entry.grid(row=i, column=j, padx=(2 if j % 3 == 0 else 0, 2 if j % 3 == 2 else 0),
-                           pady=(2 if i % 3 == 0 else 0, 2 if i % 3 == 2 else 0))
+            # Set subgrid colors based on (i, j) coordinates
+                bg_color = "#80C1FF" if (i // 3 + j // 3) % 2 == 0 else "#BAD7F2"
+
+                entry = tk.Entry(
+                    self.grid_frame,
+                    width=2,
+                    font=("Courier", 18, "bold"),
+                    justify="center",
+                    bg=bg_color,
+                    readonlybackground=bg_color,  # Match the read-only background color
+                    validate="key",
+                    validatecommand=vcmd,  # Attach the validation command
+            )
+                entry.grid(
+                    row=i,
+                    column=j,
+                    padx=(2 if j % 3 == 0 else 0, 2 if j % 3 == 2 else 0),
+                    pady=(2 if i % 3 == 0 else 0, 2 if i % 3 == 2 else 0),
+            )
+
                 if self.board[i][j] != 0:  # Preset numbers
                     entry.insert(0, self.board[i][j])
-                    entry.config(state="normal", fg="black")
-                    entry.bind("<KeyPress>", lambda e: "break")  # Disable editing for preset numbers
+                    entry.config(state="readonly", fg="black")  # Preset cells are black
                 else:  # Allow editing for user inputs
-                    entry.config(state="normal", fg="black")  # Make sure cells are editable
-                    entry.bind("<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y)) #cell loses focus (e.g., they click out of the cell), 
-                    #the check_user_input method is called to validate the user's input for that cell
+                    entry.config(state="normal", fg="black")  # Editable cells are black
+                    entry.bind(
+                    "<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y)
+                )  # Bind focus-out event
+
                 self.entries[(i, j)] = entry
 
     def create_controls(self):
@@ -106,19 +130,17 @@ class SudokuGrid:
     def check_user_input(self, row, col):
         entry = self.entries[(row, col)]
         user_input = entry.get()
-        
-        # Only check if the user entered a valid number (1-9)
+
         if user_input.isdigit():
             user_input = int(user_input)
-            
-            # Check if user input is correct
+
+        # Check if user input is correct
             if user_input != self.solution[row][col]:
                 if entry.cget("fg") != "red":  # Prevent unnecessary color updates
                     self.mistakes += 1
                     self.mistake_label.config(text=f"Mistakes: {self.mistakes}")
                     entry.config(fg="red")
-                    # Game Over when 3 mistakes are made
-                    if self.mistakes == 3:
+                    if self.mistakes == 3:  # Game Over on 3 mistakes
                         self.game_over()
             else:
                 entry.config(fg="green")
@@ -126,9 +148,10 @@ class SudokuGrid:
         elif user_input == "":  # Reset color when cleared
             entry.config(fg="black")
 
-        # Check if the game is won (all cells are correct)
+    # Check if the game is won (all cells are correct)
         if self.is_board_solved():
             self.show_play_again_popup()
+
 
     def solve_board(self):
         # Solve the puzzle by filling with the correct values from the solution
@@ -140,11 +163,13 @@ class SudokuGrid:
                 entry.config(state="readonly")  # Make it read-only
 
     def new_game(self):
-        # Generate a new Sudoku puzzle and its solution
+    # Generate a new Sudoku puzzle and its solution
         self.board, self.solution = self.generate_sudoku()  # Ensure both puzzle and solution are updated
+        self.original_board = [row[:] for row in self.board]  # Update the original board
         self.mistakes = 0
         self.mistake_label.config(text=f"Mistakes: {self.mistakes}")
-        self.update_grid()
+        self.update_grid()  # Reset and update the grid
+
 
     def restart_game(self):
         # Restart the current game
@@ -154,14 +179,27 @@ class SudokuGrid:
         self.update_grid()
 
     def update_grid(self):
-        # Update the grid with the new board
         for (i, j), entry in self.entries.items():
-            entry.delete(0, tk.END)
-            if self.board[i][j] != 0:
-                entry.insert(0, self.board[i][j])
-                entry.config(state="normal", fg="black")
-            else:
-                entry.config(state="normal", fg="black")  # Make sure cells are editable
+            entry.config(state="normal")  # Allow editing for all cells initially
+            entry.delete(0, tk.END)  # Clear the cell's content
+
+        # Reset background colors
+            bg_color = "#80C1FF" if (i // 3 + j // 3) % 2 == 0 else "#BAD7F2"
+            entry.config(bg=bg_color, readonlybackground=bg_color, fg="black")  # Reset colors
+
+        # Clear all bindings to avoid leftover behavior
+            entry.unbind("<KeyPress>")
+            entry.unbind("<FocusOut>")
+
+            if self.board[i][j] != 0:  # Preset numbers
+                entry.insert(0, self.board[i][j])  # Insert the new preset value
+                entry.config(state="readonly", fg="black")  # Make the cell readonly
+            else:  # If the cell is empty in the new game
+                entry.config(state="normal")  # Ensure it's editable
+            # Rebind focus-out event
+                entry.bind(
+                "<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y)
+            )
 
     def game_over(self):
     # Create a custom pop-up window
@@ -249,14 +287,12 @@ class SudokuGrid:
         return puzzle_board, solution_board
 
     def is_board_solved(self):
-        # Check if all cells have the correct value
         for i in range(9):
             for j in range(9):
                 entry = self.entries[(i, j)]
-                if entry.get() != str(self.solution[i][j]):
+                if not entry.get().isdigit() or int(entry.get()) != self.solution[i][j]:
                     return False
         return True
- 
 
 if __name__ == "__main__":
     root = tk.Tk()
