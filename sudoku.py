@@ -197,9 +197,7 @@ class SudokuGrid:
             else:  # If the cell is empty in the new game
                 entry.config(state="normal")  # Ensure it's editable
             # Rebind focus-out event
-                entry.bind(
-                "<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y)
-            )
+                entry.bind("<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y) )
 
     def game_over(self):
     # Create a custom pop-up window
