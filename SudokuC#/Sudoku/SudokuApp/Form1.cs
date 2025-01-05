@@ -87,7 +87,7 @@ namespace SudokuApp
 
         private void InitializeNumberLabels()
         {
-            int gridY = 840; //Y-coordinate for the label locations
+            int gridY = 840; //Y-coordinate for the grid location
             int gridHeight = (SIZE * 40 + 10); //Estimate for the grids height (40 for each textbox and 10 for border)
             int startY = gridY + gridHeight; //Combines the two heights to locate the labels below and in line with the grid
             for(int num = 0; num < SIZE; num++){
