@@ -68,9 +68,7 @@ class SudokuGrid:
                     entry.config(state="readonly", fg="black")  # Preset cells are black
                 else:  # Allow editing for user inputs
                     entry.config(state="normal", fg="black")  # Editable cells are black
-                    entry.bind(
-                    "<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y)
-                )  # Bind focus-out event
+                    entry.bind("<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y))  # Bind focus-out event
 
                 self.entries[(i, j)] = entry
 
@@ -110,22 +108,36 @@ class SudokuGrid:
 
     def highlight_number(self, number):
         if self.selected_number == number:
-            # If the same number is selected again, unhighlight all cells
+        # If the same number is selected again, unhighlight all cells
             self.selected_number = None
             for (i, j), entry in self.entries.items():
+            # Reset the background color for all cells
                 bg_color = "#80C1FF" if (i // 3 + j // 3) % 2 == 0 else "#BAD7F2"
-                entry.config(bg=bg_color)  # Reset the background color
+                entry.config(bg=bg_color)  # Reset background color
+                entry.config(highlightbackground="lightgray")  # Reset border color
+                if entry.cget("state") == "readonly":  # Reset readonly background color as well
+                    entry.config(readonlybackground=bg_color)
         else:
-            # Highlight the selected number
+        # Highlight the selected number
             self.selected_number = number
             for (i, j), entry in self.entries.items():
                 value = entry.get()
                 if value == str(number):
-                    entry.config(bg="yellow")  # Highlight the number
+                    if entry.cget("state") == "normal":  # Editable cells
+                        entry.config(bg="yellow")  # Highlight editable cells
+                        entry.config(highlightbackground="yellow")  # Highlight border for editable cells
+                    else:  # Readonly cells (preset numbers)
+                        entry.config(bg="yellow")  # Highlight background for preset cells
+                        entry.config(highlightbackground="yellow")  # Highlight border for preset cells
+                        entry.config(readonlybackground="yellow")  # Also change the readonly background color
                 else:
-                    # Reset background colors for unselected cells
+                # Reset the background color for other cells
                     bg_color = "#80C1FF" if (i // 3 + j // 3) % 2 == 0 else "#BAD7F2"
-                    entry.config(bg=bg_color)
+                    entry.config(bg=bg_color)  # Reset background color for other cells
+                    entry.config(highlightbackground="lightgray")  # Reset border color for other cells
+                    if entry.cget("state") == "readonly":
+                        entry.config(readonlybackground=bg_color)  # Reset readonly background color
+
 
     def check_user_input(self, row, col):
         entry = self.entries[(row, col)]
@@ -197,7 +209,13 @@ class SudokuGrid:
             else:  # If the cell is empty in the new game
                 entry.config(state="normal")  # Ensure it's editable
             # Rebind focus-out event
-                entry.bind("<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y) )
+                entry.bind("<FocusOut>", lambda e, x=i, y=j: self.check_user_input(x, y))
+
+    # Reapply highlighting for the selected number
+        if self.selected_number is not None:
+            self.highlight_number(self.selected_number)
+
+
 
     def game_over(self):
     # Create a custom pop-up window
