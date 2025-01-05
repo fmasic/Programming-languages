@@ -21,9 +21,15 @@ This project uses C#, JavaScript, and Python, and implements a sudoku game in ea
 ## Installation
 1. **C# Installation**:
      - Install .NET SDK.
-     - Locate and open Sudoku folder.
+     - Locate an open Sudoku folder.
      - In the console write: "cd SudokuApp"
-     - To run the program, write in console: "dotnet run". 
+     - To run the program, write in console: "dotnet run".
+2. **JavaScript Installation**:
+     - Download the code (.js file, .html file, .css file).
+     - Run it in your IDE by right clicking html file and clicking "Open with Live Server".
+3. **Python Installation**:
+     - Downolad the code.
+     - Run it in your IDE.
 
 ## Usage
 1. **Starting the Game**:
