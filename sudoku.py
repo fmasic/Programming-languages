@@ -238,12 +238,23 @@ class SudokuGrid:
 
     def show_how_to_play(self):
         how_to_play_text = (
-            "Sudoku Rules:\n\n"
-            "1. The grid is a 9x9 puzzle, divided into 9 3x3 subgrids.\n"
-            "2. Each row, column, and 3x3 subgrid must contain the numbers 1-9.\n"
-            "3. Some numbers are pre-filled; others are left blank.\n"
-            "4. Fill in the blanks by selecting numbers from 1 to 9.\n"
-            "5. You can use the 'Solve' button to fill the grid.\n"
+            "Here's a quick guide on how to play Sudoku: \n"
+                "1. Objective:\n"
+                    "- Fill a 9x9 grid with numbers from 1 to 9. \n"
+                     "- Each row, column, and 3x3 subgrid must contain every number from 1 to 9 without repetition. \n"
+                "2. Initial Setup:\n"
+                    "- Some numbers are pre-filled in the grid. These are clues to help you solve the puzzle. \n"
+                "3. Rules: \n"
+                    "- Each number (1-9) can appear only once in each row, column, and 3x3 box. \n"
+                    "- Use logic to deduce the correct placement of numbers. \n"
+                "4. How to Play: \n"
+                    "- Look for rows, columns, or boxes that are nearly filled in to help you narrow down possible numbers. \n"
+                    "- Try filling in a number that fits according to the Sudoku rules. \n"
+                    "- If you make a mistake, it will highlight the wrong cell, and you can correct it. \n"
+                    "- Be careful, three mistakes and you will lose. \n"
+                    "- If you get stuck, you can use the Solve button to see the completed puzzle or restart with the Clear button. \n"
+                "5. Winning: \n"
+                    "- You win when all cells are correctly filled, and every row, column, and 3x3 box contains the numbers 1 to 9 without repetition. "
         )
 
         popup = tk.Toplevel(self.root)
