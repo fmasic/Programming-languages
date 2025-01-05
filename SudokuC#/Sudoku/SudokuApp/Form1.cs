@@ -14,6 +14,7 @@ namespace SudokuApp
         Label mistakeLabel; //Creates a label for the mistake counter
         int[,] solution = new int[SIZE, SIZE]; //Creates an array to hold the solution of each generated sudoku puzzle
         int mistakeCount = 0; 
+        private int? currentlyHighlightedNumber = null; //Variable to track the currently highlighted number
         public Form1()
         {
             InitializeComponent(); //Initializes the appearance of the window from Form1.Designer.cs
@@ -248,32 +249,6 @@ namespace SudokuApp
             return numbers;
         }
 
-        private void DisplayBoard(int[,] board)
-        {
-            for (int row = 0; row < SIZE; row++)
-            {
-                for (int col = 0; col < SIZE; col++)
-                {
-                    var cell = gridLayout[row, col]; //Gets the TextBox at a specific position from the grid
-
-                    cell.Text = board[row, col] == 0 ? "" : board[row, col].ToString(); //Checks if the cell is empty (if yes, display empty cell, if no, display the number as a string)
-
-                    if (board[row, col] != 0)  //Checks if the number is pre set
-                    {
-                        cell.ForeColor = Color.White;
-                        cell.ReadOnly = true; //Cannot be edited
-                        cell.BackColor = Color.FromArgb(90,185,222);
-                    }
-                    else  //Else the number is a user input value
-                    {
-                        cell.ForeColor = Color.White;
-                        cell.ReadOnly = false; //Can be edited
-                        cell.BackColor = Color.SkyBlue; 
-                    }
-                }
-            }
-        }
-
         private bool FillSudoku(int[,] board)
         {
             for (int row = 0; row < SIZE; row++)
@@ -335,6 +310,32 @@ namespace SudokuApp
                 {
                     board[row, col] = 0; //Sets the cell to be empty, erasing the number
                     count--;
+                }
+            }
+        }
+
+        private void DisplayBoard(int[,] board)
+        {
+            for (int row = 0; row < SIZE; row++)
+            {
+                for (int col = 0; col < SIZE; col++)
+                {
+                    var cell = gridLayout[row, col]; //Gets the TextBox at a specific position from the grid
+
+                    cell.Text = board[row, col] == 0 ? "" : board[row, col].ToString(); //Checks if the cell is empty (if yes, display empty cell, if no, display the number as a string)
+
+                    if (board[row, col] != 0)  //Checks if the number is pre set
+                    {
+                        cell.ForeColor = Color.White;
+                        cell.ReadOnly = true; //Cannot be edited
+                        cell.BackColor = Color.FromArgb(90,185,222);
+                    }
+                    else  //Else the number is a user input value
+                    {
+                        cell.ForeColor = Color.White;
+                        cell.ReadOnly = false; //Can be edited
+                        cell.BackColor = Color.SkyBlue; 
+                    }
                 }
             }
         }
@@ -558,7 +559,6 @@ namespace SudokuApp
         {
             int[,] board = new int[SIZE, SIZE]; //Represents the Sudoku 9x9 grid
     
-            // Copy the current board state into the board variable
             for (int row = 0; row < SIZE; row++)
             {
                 for (int col = 0; col < SIZE; col++)
@@ -613,8 +613,6 @@ namespace SudokuApp
                 UnhighlightAllCells();
             }
         }    
-
-        private int? currentlyHighlightedNumber = null; //Variable to track the currently highlighted number
 
         private void NumberLabel_Click(object sender, EventArgs e)
         {       
