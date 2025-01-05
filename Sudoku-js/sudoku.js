@@ -113,6 +113,11 @@ function setGame() {
 
 function selectNum() {
     if (selected_num != null) {
+        if(selected_num===this){ //if you click on the digits once it selects it, but second time unselects it
+            unhighlightCells();
+            selected_num.classList.remove("number-selected");
+            return; //get out of the function
+        }
         selected_num.classList.remove("number-selected");
         unhighlightCells();
     } // with this we are toggling number selected so you can only select one digit below the board at a time and if user clicks on a new one number selected shading is removed
