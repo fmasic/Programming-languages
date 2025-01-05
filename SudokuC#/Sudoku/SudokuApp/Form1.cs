@@ -414,7 +414,7 @@ namespace SudokuApp
                         }
                         else
                         {
-                            allCorrect = false; //If the number can still be entered correctly, allCorrect is set to false
+                            allCorrect = false; //It means that the number was not entered correctly in all places
                         }
                     }
                 }
